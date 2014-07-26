@@ -1,4 +1,6 @@
 #include<stdio.h>
+#include<bitset>
+#include<string.h>
 #include<iostream>
 #include<vector>
 #include<string>
