@@ -18,15 +18,6 @@ typedef long long int ll;
 #define For(i,s,e) for(int i=(s);i<=(e);i++)
 #define mp(a,b)	make_pair((a),(b))
 
-#define pi(x) printf("%d",(x))
-#define pl(x) printf("%lld",(x))
-#define pe() printf("\n")
-#define ps(x)	printf("%s",(x))
-
-#define si(x) scanf("%d",&(x))
-#define sl(x) scanf("%lld",&(x))
-#define ss(x) scanf("%s",(x))
-
 int main()
 {
 	return 0;
