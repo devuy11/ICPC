@@ -24,16 +24,17 @@ typedef long long int ll;
 
 #define DEBUG(x) cout<<" "<<#x<<"  "<<(x)<<"\n";
 
-void solve()
-{
+#define INF 1e9
+
+int find(int s,int e){	
+	return rand()%(e-s+1) + s;
 }
+
 
 int main()
 {
-	int T;
-	cin>>T;
-	for(int i=1;i<=T;i++){
-		solve();
-	}
+	int N = 10,M=40;
+	printf("%d %d\n",N,M);
+	for(int i=1;i<=M;i++)	printf("%d %d %d\n",find(1,N),find(1,N),find(1,INF));
 	return 0;
 }

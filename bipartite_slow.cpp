@@ -26,12 +26,13 @@ typedef long long int ll;
 
 void solve()
 {
+		
 }
 
 int main()
 {
 	int T;
-	cin>>T;
+	T=1;
 	for(int i=1;i<=T;i++){
 		solve();
 	}

@@ -19,7 +19,7 @@ typedef long long int ll;
 #define mp(a,b)	make_pair((a),(b))
 
 /******************Slow Sieve******************/
-#define upto 1000000
+#define upto 100000
 int slow_a[upto+1],prime[upto+1],counter;
 void slow_sieve()
 {
@@ -44,10 +44,10 @@ void slow_sieve()
 #define lmt 10000	//square root of upto
 bitset<Fupto/2+1> mybits;	//Total Odd Numbers:50000000 
 //Initially when you declare, all the bits are zero initialised
-int prime_a[(Fupto/2)+1];
+int prime_a[(Fupto/2)+1],cnt;
 void fast_sieve()
 {
-	int count=1;
+	cnt=1;
 	prime_a[0]=2;
 	for(int i=3;i<=lmt;i+=2)	//travelling only through odd numbers because even numbers are not prime.
 	{
@@ -62,8 +62,8 @@ void fast_sieve()
 	{
 		if(!mybits[i>>1])
 		{
-			prime_a[count]=i;
-			count++;
+			prime_a[cnt]=i;
+			cnt++;
 		}
 	}
 }
@@ -71,9 +71,11 @@ void fast_sieve()
 /**************End of Fast Sieve**********/
 int main()
 {
-	slow_sieve();
-	for(int i=0;i<10;i++)	printf("%d ",prime[i]);
+	//slow_sieve();
+	//for(int i=1;i<counter;i++)	if((prime[i]-prime[i-1])==6)	printf("%d %d\n",prime[i-1],prime[i]);
+	//printf("%d is counter\n",counter);
+	//for(int i=0;i<10;i++)	printf("%d ",prime[i]);
 	fast_sieve();
-	for(int i=0;i<10;i++)	printf("%d ",prime_a[i]);
+	for(int i=cnt-1;i>=cnt-50;i--)	printf("%d,",prime_a[i]);
 	return 0;
 }
