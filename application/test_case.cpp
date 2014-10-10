@@ -33,7 +33,7 @@ int find(int s,int e){
 
 int main()
 {
-	int N = 50000,M=50000,P=150000;
+	int N = 100,M=100,P=50;
 	printf("%d %d %d\n",N,M,P);
 	for(int i=1;i<=P;i++)	printf("%d %d\n",find(1,N),find(1,M));
 	return 0;
