@@ -1,86 +1,94 @@
 #include<stdio.h>
-#include<algorithm>
-using namespace std;
-#define Nodes 5000
-#define Edges 60000
-typedef long long int ll;
-const ll INF = (ll) 1000000000 * (ll) 1000000000 ;
-int nodes,edges,to[Edges],fin[Nodes],next[Edges],src,snk,cop[Nodes],Q[Nodes],dist[Nodes],cap[Edges];
-ll flow[Edges];
-void addedge(int u,int v,int c)
+#include<string.h>
+#define Nodes 	50001	//N	+ NIL_Node
+#define Edges	150000
+#define RNodes	50001	//M
+#define NIL 0
+#define INF 1000000000
+//  0  :: N  ::   M
+int nodes,edges,N,M,to[Edges],next[Edges],fin[Nodes],Left[Nodes],Right[RNodes],dist[Nodes],Q[Nodes];
+void addedges(int u,int v)
 {
 	to[edges]=v;
 	next[edges]=fin[u];
 	fin[u]=edges;
-	cap[edges]=c;
-	flow[edges]=0;
 	edges++;
 }
 bool bfs()
 {
-	for(int i=0;i<nodes;i++)	dist[i]=-1;
-	int st=0,end=1,u,v;
-	Q[0]=src;
-	dist[src]=0;
-	while(st<end){
-		u=Q[st];
-		st++;
-		for(int i=fin[u];i!=-1;i=next[i]){	
-			v=to[i];
-			if(flow[i]<cap[i] && dist[v]==-1){
-				dist[v]=dist[u]+1;
-				Q[end]=v;
-				end++;
+	int s=0,e=0,u,v,u1;
+	for(int i=1;i<=N;i++){
+		if(Left[i]==NIL){
+			dist[i]=0;
+			Q[e]=i;
+			e++;
+		}
+		else	dist[i]=INF;
+	}
+	dist[NIL]=INF;
+	
+	while(s<e){
+		u=Q[s];
+		s++;
+		for(int j=fin[u];j!=-1;j=next[j]){	
+			v=to[j];
+			u1=Right[v];
+			if(dist[u1]==INF){			//Traversing a Matched Edges and a unmatched Edges
+				dist[u1]=dist[u]+1;
+				Q[e]=u1;
+				e++;
 			}
+			if(dist[NIL]!=INF)			//Free Vertex in M has been encountered
+				return true;
 		}
 	}
-	return dist[snk]!=-1;
+	return dist[NIL]!=INF;
 }
-ll dfs(int u,ll fl)
+bool dfs(int u)
 {
-	ll val;int v;
-	if(u==snk)		return fl;
-	for(int &e = cop[u];e!=-1;e=next[e]){
-		v=to[e];
-		if(flow[e]<cap[e] && dist[v]==dist[u]+1){
-			val=dfs(v,min(fl,cap[e]-flow[e]));
-			if(val>0){
-				flow[e]+=val;
-				flow[e^1]-=val;
-				return val;
+	int v,u1;
+	if(u!=NIL){
+		for(int j=fin[u];j!=-1;j=next[j]){
+			v=to[j];
+			u1=Right[v];
+			if(dist[u1]==dist[u]+1){
+				if(dfs(u1)){
+					Right[v]=u;
+					Left[u]=v;
+					return true;
+				}
 			}
 		}
+		return false;
 	}
-	return 0;
+	else	return true;
 }
-ll Network()			//Returns the maximum flow from src to snk
+int HopCroft()
 {
-	ll ans=0,x;
+	int ans=0;
+	for(int i=1;i<=N;i++)	Left[i]=NIL;
+	for(int j=1;j<=M;j++)	Right[j]=NIL;
 	while(bfs()){
-		for(int i=0;i<nodes;i++)	cop[i]=fin[i];
-		while(true){
-			x=dfs(src,INF);
-			if(x==0)	break;
-			else	ans+=x;
+		//printf("Helo\n");
+		for(int i=1;i<=N;i++){
+			if(Left[i]==NIL){
+				if(dfs(i))	ans++;
+			}
 		}
 	}
 	return ans;
 }
 int main()
-{	
-	int n,c,a,b,m;
-	char x ,y;
-	scanf("%d%d",&n,&m);
-	src=0;snk=n-1;
-	nodes=n;
-	for(int i=0;i<nodes;i++)	fin[i]=-1;
-	while(m--){
-		scanf(" %d %d %d",&a,&b,&c);
-		a--;b--;
-		addedge(a,b,c);
-		addedge(b,a,c);
+{
+	int P,x,y;
+	scanf("%d%d%d",&N,&M,&P);
+	edges=0;
+	for(int i=1;i<=N;i++)	fin[i]=-1;		//N nodes
+	while(P--){
+		scanf("%d%d",&x,&y);
+		addedges(x,y);
 	}
-	printf("%lld\n",Network());
+	printf("%d\n",HopCroft());
 	return 0;
 }
 

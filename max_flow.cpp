@@ -43,6 +43,7 @@ void init(int n,int sc,int sk)	//give me src and snk
 	flow.clear();
 	next.clear();
 	fin = vector<int>(n+2,-1);
+	dist = vector<int>(n+2,-1);
 }
 
 void addedge(int u,int v,int c)
@@ -54,7 +55,8 @@ void addedge(int u,int v,int c)
 
 bool bfs()
 {
-	dist = vector<int>(nodes+3,-1);
+	fill(dist.begin(),dist.end(),-1);	
+	
 	queue<int> Q;
 	Q.push(src);
 	dist[src] = 0;
